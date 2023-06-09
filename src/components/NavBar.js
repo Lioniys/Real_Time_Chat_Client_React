@@ -8,11 +8,13 @@ import AuthModal from "./AuthModal";
 
 
 const NavBar = observer(() => {
-    const {chat} = useContext(Context)
+    const {chat} = useContext(Context);
+    const {user} = useContext(Context);
 
     return (
         <Navbar bg="dark" variant="dark">
             <Container>
+                <AuthModal/>
                 <Nav className="ml-auto">
                     <Button
                         className="me-3 p-1"
@@ -21,16 +23,9 @@ const NavBar = observer(() => {
                     ><Image height={30} width={40} src={menu}/></Button>
                     <Navbar.Brand href={MAIN_ROUTE}>Real Time Chat</Navbar.Brand>
                 </Nav>
-
-                {/*<Nav className="ml-auto">*/}
-                {/*    <Button>bbbb</Button>*/}
-                {/*    <Button className="ms-4">Вихід</Button>*/}
-                {/*</Nav>*/}
-
                 <Nav className="ml-auto">
-                    <Button variant="secondary">Авторизація</Button>
+                    <Button className="ms-4" onClick={() => user.logOut()}>Вихід</Button>
                 </Nav>
-                <AuthModal/>
             </Container>
         </Navbar>
     );

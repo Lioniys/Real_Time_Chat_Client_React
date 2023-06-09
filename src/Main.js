@@ -7,7 +7,7 @@ import {Context} from "./index";
 
 
 const Main = observer(() => {
-    const {chat} = useContext(Context)
+    const {chat} = useContext(Context);
 
     return (
         <Container>
