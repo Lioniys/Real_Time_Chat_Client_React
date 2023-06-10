@@ -19,7 +19,7 @@ const NavBar = observer(() => {
                     <Button
                         className="me-3 p-1"
                         variant="secondary"
-                        onClick={() => chat.setChatList(!chat.chatList)}
+                        onClick={() => chat.setChatListBool(!chat.chatList)}
                     ><Image height={30} width={40} src={menu}/></Button>
                     <Navbar.Brand href={MAIN_ROUTE}>Real Time Chat</Navbar.Brand>
                 </Nav>

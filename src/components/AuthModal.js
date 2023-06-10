@@ -11,22 +11,22 @@ const AuthModal = observer(() => {
     const [isLogin, setIsLogin] = useState(true);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [username, setUsername] = useState('');
+    const [name, setName] = useState('');
     const {user} = useContext(Context);
 
 
     const singIn = async () => {
         try {
             if (isLogin) {
-                if(username && password) {
-                    const userId = await login(username, password)
+                if(email && password) {
+                    const userId = await login(email, password)
                     user.setUser({id: userId});
                     user.setIsAuth(true);
                     user.setShowAuth(false);
                 }
             } else {
-                if( password && email) {
-                    const userId = await registration( password, email);
+                if(email && password && name) {
+                    const userId = await registration(email, password, name);
                     user.setUser({id: userId});
                     user.setIsAuth(true);
                     user.setShowAuth(false);
@@ -46,7 +46,7 @@ const AuthModal = observer(() => {
                 user.setIsAuth(true);
                 user.setShowAuth(false);
             } else {
-                const userId = await registration(data.sub, data.email);
+                const userId = await registration(data.email, data.sub, data.name);
                 user.setUser({id: userId});
                 user.setIsAuth(true);
                 user.setShowAuth(false);
@@ -63,21 +63,28 @@ const AuthModal = observer(() => {
                     <h2 className="d-flex m-auto text-center">{isLogin ? 'Авторизация' : 'Регистрация'}</h2>
                     <Form className="flex-column d-flex" validated={true}>
                         {isLogin ? '' :
-                            <Form.Control
-                                required
-                                className="mt-3"
-                                placeholder="email"
-                                value={email}
-                                onChange={e => setEmail(e.target.value)}
-                            />}
+                            <div>
+                                <Form.Control
+                                    name="name"
+                                    required
+                                    className="mt-3"
+                                    placeholder="name"
+                                    value={name}
+                                    onChange={e => setName(e.target.value)}
+                                />
+                            </div>
+                        }
                         <Form.Control
+                            name="email"
+                            autoComplete="email"
                             required
                             className="mt-3"
-                            placeholder="username"
-                            value={username}
-                            onChange={e => setUsername(e.target.value)}
+                            placeholder="email"
+                            value={email}
+                            onChange={e => setEmail(e.target.value)}
                         />
                         <Form.Control
+                            name="password"
                             required
                             className="mt-3"
                             placeholder="password"

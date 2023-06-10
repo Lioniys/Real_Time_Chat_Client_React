@@ -31,6 +31,7 @@ const Chat = () => {
             </div>
             <div className="d-flex justify-content-center">
                 <Form.Control
+                    name="text"
                     as="textarea"
                     rows={1}
                     className="mt-3 mb-3 ms-3"

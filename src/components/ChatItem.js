@@ -1,7 +1,9 @@
 import React from 'react';
 import {Card} from "react-bootstrap";
 
-const ChatItem = () => {
+
+const ChatItem = ({item}) => {
+
     return (
         <Card className="m-2 p-1 rounded-4 text-muted" style={{background: '#CCD6A6'}}>
             <div className="d-flex flex-column mx-2 mt-2">

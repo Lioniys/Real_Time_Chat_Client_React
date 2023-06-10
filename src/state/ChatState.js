@@ -4,12 +4,21 @@ import {makeAutoObservable} from "mobx";
 export default class ChatState {
 
     constructor() {
-        this._chatList = true
+        this._chatListBool = true
+        this._chatList = []
         makeAutoObservable(this)
     }
 
-    setChatList(bool) {
-        this._chatList = bool
+    setChatListBool(bool) {
+        this._chatListBool = bool
+    }
+
+    get chatListBool() {
+        return this._chatListBool
+    }
+
+    setChatList(list) {
+        this._chatListBool = list
     }
 
     get chatList() {
