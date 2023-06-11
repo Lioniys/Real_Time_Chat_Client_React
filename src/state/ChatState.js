@@ -6,6 +6,7 @@ export default class ChatState {
     constructor() {
         this._chatListBool = true
         this._chatList = []
+        this._selectChat = {}
         makeAutoObservable(this)
     }
 
@@ -23,5 +24,13 @@ export default class ChatState {
 
     get chatList() {
         return this._chatList
+    }
+
+    setSelectChat(chat) {
+        this._selectChat = chat
+    }
+
+    get selectChat() {
+        return this._selectChat
     }
 }

@@ -6,14 +6,19 @@ export const getChats = async () => {
     return response.data
 }
 
+export const getChat = async (id) => {
+    const response = await $authHost.get('api/v1/chats/' + id + '/')
+    return response.data
+}
+
 export const createChat = async (chatName, idUser) => {
     const response = await $authHost.post('api/v1/chats',
-        {chat_name: chatName, id: idUser})
+        {chat_name: chatName, second_user_id: idUser})
     return response.data
 }
 
 export const addUserInChat = async (id, idUser) => {
-    const response = await $authHost.post('api/v1/chats' + id + '/', {id: idUser})
+    const response = await $authHost.post('api/v1/chats/' + id + '/', {id: idUser})
     return response.data
 }
 

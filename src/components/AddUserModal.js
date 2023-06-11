@@ -1,13 +1,12 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Button, Dropdown, Form, Modal, Stack} from "react-bootstrap";
-import {createChat, getUsers} from "../http/chatAPI";
+import {Button, Dropdown, Modal, Stack} from "react-bootstrap";
 import {Context} from "../index";
 import {observer} from "mobx-react-lite";
+import {addUserInChat, getUsers} from "../http/chatAPI";
 
 
-const CreateChatModal = observer((
+const AddUserModal = observer((
     {setShow, show, trigger, setShowAlert, setDataAlert, setTypeAlert}) => {
-    const [text, setText] = useState('')
     const [dropdownName, setDropdownName] = useState('Выберите пользователя')
     const [userList, setUserList] = useState([])
     const [selectUser, setSelectUser] = useState('')
@@ -18,27 +17,26 @@ const CreateChatModal = observer((
             setUserList(r)
             setDropdownName('Выберите пользователя')
             setSelectUser('')
-            setText('')
         }).catch(e => console.log(e))
     }, [trigger])
 
-    const create = () => {
-        if (text && selectUser) {
-            createChat(text, selectUser).then(() => {
+    const add = () => {
+        if (selectUser) {
+            addUserInChat(selectUser).then(() => {
                 setShow(false)
                 setShowAlert(true)
                 setTimeout(() => setShowAlert(false), 1500)
             }).catch(e => {
                 setShow(false)
                 setTypeAlert('danger');
-                setDataAlert('Не получитось создать чат');
+                setDataAlert('Не получитось добавить пользователяс');
                 setShowAlert(true);
                 setTimeout(() => {
                     setShowAlert(false);
                 }, 1500);
                 setTimeout(() => {
                     setTypeAlert('success');
-                    setDataAlert('чат создан');
+                    setDataAlert('Пользователь добавлен');
                 }, 1700);
                 console.log(e)
             })
@@ -50,33 +48,27 @@ const CreateChatModal = observer((
             <div className="rounded-2" style={{background: "#9DB2BF"}}>
                 <Modal.Body>
                     <Stack gap={3} className="align-items-center">
-                        <Form.Control
-                            className="w-75"
-                            placeholder="Имя чата"
-                            value={text}
-                            onChange={e => setText(e.target.value)}
-                        />
                         <Dropdown className="w-75">
                             <Dropdown.Toggle className="w-100" variant="secondary">{dropdownName}</Dropdown.Toggle>
                             <Dropdown.Menu>
                                 {userList?.map(i =>
-                                        <Dropdown.Item
-                                            key={i.id}
-                                            onClick={() => {
-                                                if (i.id !== user.user.id) {
-                                                    setDropdownName(i.name)
-                                                    setSelectUser(i.id)
-                                                }
-                                            }}
-                                        >{i.id === user.user.id ? '' : i.name}</Dropdown.Item>
+                                    <Dropdown.Item
+                                        key={i.id}
+                                        onClick={() => {
+                                            if (i.id !== user.user.id) {
+                                                setDropdownName(i.name)
+                                                setSelectUser(i.id)
+                                            }
+                                        }}
+                                    >{i.id === user.user.id ? '' : i.name}</Dropdown.Item>
                                 )}
                             </Dropdown.Menu>
                         </Dropdown>
                         <Button
                             className="w-75"
                             variant="dark"
-                            onClick={() => create()}
-                        >Создать</Button>
+                            onClick={() => add()}
+                        >Добавить</Button>
                     </Stack>
                 </Modal.Body>
             </div>
@@ -84,4 +76,4 @@ const CreateChatModal = observer((
     );
 });
 
-export default CreateChatModal;
+export default AddUserModal;
