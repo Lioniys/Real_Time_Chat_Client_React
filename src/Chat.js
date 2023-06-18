@@ -1,6 +1,6 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Alert, Button, Form} from "react-bootstrap";
-import {ws, client_id} from "./webSocket";
+import {listen, newWebSocket, sendMessage} from "./websokets/webSocket";
 import Message from "./components/Message";
 import {observer} from "mobx-react-lite";
 import {Context} from "./index";
@@ -15,23 +15,28 @@ const Chat = observer(() => {
     const [showAlert, setShowAlert] = useState(false);
     const [dataAlert, setDataAlert] = useState('Пользователь добавлен');
     const [typeAlert, setTypeAlert] = useState('success');
+    const [ws, setWs] = useState({})
     const {chat} = useContext(Context);
     const {user} = useContext(Context);
 
-    ws.onmessage = (event) => {
-        const msg = JSON.parse(event.data)
-        setMessages([msg, ...messages])
-    }
+    // useEffect(() => {
+    //
+    // }, [chat.selectChat])
 
-    const sendMessage = () => {
-        console.log(value)
-        ws.send(JSON.stringify({
-            id: client_id,
-            message: value,
-            time: new Date().toLocaleTimeString('en-US', { hour12: false, hour: "numeric", minute: "numeric"}),
-            date: new Date().toLocaleDateString()
-        }))
-        setValue('')
+    useEffect(() => {
+        if (user.isAuth) {
+            setWs(newWebSocket(chat.chatList))
+            listen(ws, (msg) => setMessages([msg, ...messages]))
+        }
+    }, [user.isAuth])
+
+
+
+    const send = () => {
+        if (chat.selectChat._id && user.isAuth) {
+            sendMessage(ws, user.user.id, value, chat.selectChat._id)
+            setValue('')
+        }
     }
 
     return (
@@ -77,7 +82,7 @@ const Chat = observer(() => {
                     onChange={e => setValue(e.target.value)}
                     style={{background: '#DDE6ED'}}
                 />
-                <Button className="mt-3 mb-3 mx-3" variant="dark" onClick={() => sendMessage()}>Отправить</Button>
+                <Button className="mt-3 mb-3 mx-3" variant="dark" onClick={() => send()}>Отправить</Button>
             </div>
             <AddUserModal
                 setShow={setShow}

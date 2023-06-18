@@ -14,13 +14,15 @@ const CreateChatModal = observer((
     const {user} = useContext(Context);
 
     useEffect(() => {
-        getUsers().then(r => {
-            setUserList(r)
-            setDropdownName('Выберите пользователя')
-            setSelectUser('')
-            setText('')
-        }).catch(e => console.log(e))
-    }, [trigger])
+        if (show) {
+            getUsers().then(r => {
+                setUserList(r)
+                setDropdownName('Выберите пользователя')
+                setSelectUser('')
+                setText('')
+            }).catch(e => console.log(e))
+        }
+    }, [show, trigger])
 
     const create = () => {
         if (text && selectUser) {

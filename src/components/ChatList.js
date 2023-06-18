@@ -1,9 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import ChatItem from "./ChatItem";
 import {Alert, Button} from "react-bootstrap";
 import {observer} from "mobx-react-lite";
 import CreateChatModal from "./CreateChatModal";
 import {getChats} from "../http/chatAPI";
+import {Context} from "../index";
 
 
 const ChatList = observer(() => {
@@ -13,12 +14,15 @@ const ChatList = observer(() => {
     const [dataAlert, setDataAlert] = useState('чат создан');
     const [typeAlert, setTypeAlert] = useState('success');
     const [chatList , setChatList] = useState([])
+    const {user} = useContext(Context);
 
     useEffect(() => {
-        getChats().then(r => {
-            setChatList(r)
-        }).catch(e => console.log(e))
-    }, [])
+        if (user.isAuth) {
+            getChats().then(r => {
+                setChatList(r)
+            }).catch(e => console.log(e))
+        }
+    }, [user.isAuth])
 
     return (
         <div className="d-flex flex-column rounded-4 me-4 w-25"

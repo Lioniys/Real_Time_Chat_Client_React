@@ -13,12 +13,14 @@ const AddUserModal = observer((
     const {user} = useContext(Context);
 
     useEffect(() => {
-        getUsers().then(r => {
-            setUserList(r)
-            setDropdownName('Выберите пользователя')
-            setSelectUser('')
-        }).catch(e => console.log(e))
-    }, [trigger])
+        if (show) {
+            getUsers().then(r => {
+                setUserList(r)
+                setDropdownName('Выберите пользователя')
+                setSelectUser('')
+            }).catch(e => console.log(e))
+        }
+    }, [show, trigger])
 
     const add = () => {
         if (selectUser) {
