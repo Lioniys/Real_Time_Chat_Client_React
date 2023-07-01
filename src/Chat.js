@@ -1,10 +1,11 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Alert, Button, Form} from "react-bootstrap";
-import {listen, newWebSocket, sendMessage} from "./websokets/webSocket";
+import {listen, newWebSocket, sendMessage, sendFirstMessage} from "./websokets/webSocket";
 import Message from "./components/Message";
 import {observer} from "mobx-react-lite";
 import {Context} from "./index";
 import AddUserModal from "./components/AddUserModal";
+import {getMessages} from "./http/chatAPI";
 
 
 const Chat = observer(() => {
@@ -19,18 +20,21 @@ const Chat = observer(() => {
     const {chat} = useContext(Context);
     const {user} = useContext(Context);
 
-    // useEffect(() => {
-    //
-    // }, [chat.selectChat])
+    useEffect(() => {
+        if (chat.selectChat._id && user.isAuth) {
+            getMessages(chat.selectChat._id).then(r => setMessages(r)).catch(e => console.log(e))
+        }
+    }, [user.isAuth, chat.selectChat._id])
 
     useEffect(() => {
-        if (user.isAuth) {
-            setWs(newWebSocket(chat.chatList))
-            listen(ws, (msg) => setMessages([msg, ...messages]))
+        if (!!chat.chatList.length) {
+            const ws = newWebSocket()
+            setWs(ws)
+            sendFirstMessage(ws, chat.chatList)
         }
-    }, [user.isAuth])
+    }, [chat.chatList] )
 
-
+    listen(ws, (msg) => setMessages([msg, ...messages]))
 
     const send = () => {
         if (chat.selectChat._id && user.isAuth) {
@@ -69,7 +73,7 @@ const Chat = observer(() => {
                 </div>
                 : ''}
             <div className="d-flex flex-column-reverse h-100 overflow-auto">
-                {messages?.map(msg => <Message msg={msg}/>)}
+                {messages?.map(msg => <Message key={msg.datetime} msg={msg}/>)}
             </div>
             <div className="d-flex justify-content-center">
                 <Form.Control

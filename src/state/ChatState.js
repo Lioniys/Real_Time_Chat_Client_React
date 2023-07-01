@@ -19,7 +19,7 @@ export default class ChatState {
     }
 
     setChatList(list) {
-        this._chatListBool = list
+        this._chatList = list
     }
 
     get chatList() {
