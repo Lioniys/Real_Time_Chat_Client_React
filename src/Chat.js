@@ -9,37 +9,39 @@ import {getMessages} from "./http/chatAPI";
 
 
 const Chat = observer(() => {
-    const [messages, setMessages] = useState([])
-    const [value, setValue] = useState('')
+    const [messages, setMessages] = useState([]);
+    const [value, setValue] = useState('');
     const [show, setShow] = useState(false);
     const [trigger, setTrigger] = useState(false);
     const [showAlert, setShowAlert] = useState(false);
     const [dataAlert, setDataAlert] = useState('Пользователь добавлен');
     const [typeAlert, setTypeAlert] = useState('success');
-    const [ws, setWs] = useState({})
+    const [ws, setWs] = useState({});
     const {chat} = useContext(Context);
     const {user} = useContext(Context);
 
     useEffect(() => {
         if (chat.selectChat._id && user.isAuth) {
-            getMessages(chat.selectChat._id).then(r => setMessages(r)).catch(e => console.log(e))
+            getMessages(chat.selectChat._id).then(r => {
+                setMessages(r);
+            }).catch(e => console.log(e));
         }
-    }, [user.isAuth, chat.selectChat._id])
+    }, [user.isAuth, chat.selectChat._id]);
 
     useEffect(() => {
         if (!!chat.chatList.length) {
-            const ws = newWebSocket()
-            setWs(ws)
-            sendFirstMessage(ws, chat.chatList)
+            const ws = newWebSocket();
+            setWs(ws);
+            sendFirstMessage(ws, chat.chatList);
         }
-    }, [chat.chatList] )
+    }, [chat.chatList]);
 
-    listen(ws, (msg) => setMessages([msg, ...messages]))
+    listen(ws, (msg) => setMessages([msg, ...messages]));
 
     const send = () => {
         if (chat.selectChat._id && user.isAuth) {
-            sendMessage(ws, user.user.id, value, chat.selectChat._id)
-            setValue('')
+            sendMessage(ws, user.user.id, value, chat.selectChat._id);
+            setValue('');
         }
     }
 

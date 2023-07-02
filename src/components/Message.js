@@ -6,8 +6,8 @@ import {observer} from "mobx-react-lite";
 
 const Message = observer(({msg}) => {
     const {user} = useContext(Context);
-    const time = msg.datetime.split('T')[1]
-    const date = msg.datetime.split('T')[0]
+    const time = msg.datetime.split('T')[1];
+    const date = msg.datetime.split('T')[0];
 
     return (
         <div className={msg.sender === user.user.id ? "d-flex justify-content-end ms-5 me-2" : "d-flex me-5 ms-2"}>

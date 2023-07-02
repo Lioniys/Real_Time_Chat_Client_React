@@ -1,2 +1,2 @@
 
-export const MAIN_ROUTE = '/'
+export const MAIN_ROUTE = '/';

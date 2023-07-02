@@ -2,41 +2,31 @@ import {makeAutoObservable} from "mobx";
 
 
 export default class UserState {
-
     constructor() {
-        this._isAuth = false
-        this._user = {}
-        this._showAuth = false
-        makeAutoObservable(this)
+        this._isAuth = false;
+        this._user = {};
+        makeAutoObservable(this);
     }
 
     logOut = () => {
-        this._user = {}
-        this._isAuth = false
-        localStorage.removeItem('access')
-    }
-
-    setShowAuth(bool) {
-        this._showAuth = bool
-    }
-
-    get showAuth() {
-        return this._showAuth
+        this._user = {};
+        this._isAuth = false;
+        localStorage.removeItem('access');
     }
 
     setIsAuth(bool) {
-        this._isAuth = bool
+        this._isAuth = bool;
     }
 
     get isAuth() {
-        return this._isAuth
+        return this._isAuth;
     }
 
     setUser(user) {
-        this._user = user
+        this._user = user;
     }
 
     get user() {
-        return this._user
+        return this._user;
     }
 }

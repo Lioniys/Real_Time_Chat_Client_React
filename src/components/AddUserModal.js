@@ -7,31 +7,31 @@ import {addUserInChat, getUsers} from "../http/chatAPI";
 
 const AddUserModal = observer((
     {setShow, show, trigger, setShowAlert, setDataAlert, setTypeAlert}) => {
-    const [dropdownName, setDropdownName] = useState('Выберите пользователя')
-    const [userList, setUserList] = useState([])
-    const [selectUser, setSelectUser] = useState('')
+    const [dropdownName, setDropdownName] = useState('Выберите пользователя');
+    const [userList, setUserList] = useState([]);
+    const [selectUser, setSelectUser] = useState('');
     const {user} = useContext(Context);
 
     useEffect(() => {
         if (show) {
             getUsers().then(r => {
-                setUserList(r)
-                setDropdownName('Выберите пользователя')
-                setSelectUser('')
-            }).catch(e => console.log(e))
+                setUserList(r);
+                setDropdownName('Выберите пользователя');
+                setSelectUser('');
+            }).catch(e => console.log(e));
         }
-    }, [show, trigger])
+    }, [show, trigger]);
 
     const add = () => {
         if (selectUser) {
             addUserInChat(selectUser).then(() => {
-                setShow(false)
-                setShowAlert(true)
-                setTimeout(() => setShowAlert(false), 1500)
+                setShow(false);
+                setShowAlert(true);
+                setTimeout(() => setShowAlert(false), 1500);
             }).catch(e => {
-                setShow(false)
+                setShow(false);
                 setTypeAlert('danger');
-                setDataAlert('Не получитось добавить пользователяс');
+                setDataAlert('Не получилось добавить пользователя');
                 setShowAlert(true);
                 setTimeout(() => {
                     setShowAlert(false);
@@ -40,8 +40,8 @@ const AddUserModal = observer((
                     setTypeAlert('success');
                     setDataAlert('Пользователь добавлен');
                 }, 1700);
-                console.log(e)
-            })
+                console.log(e);
+            });
         }
     }
 

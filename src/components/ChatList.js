@@ -13,18 +13,16 @@ const ChatList = observer(() => {
     const [showAlert, setShowAlert] = useState(false);
     const [dataAlert, setDataAlert] = useState('чат создан');
     const [typeAlert, setTypeAlert] = useState('success');
-    const [chatList , setChatList] = useState([])
     const {user} = useContext(Context);
     const {chat} = useContext(Context);
 
     useEffect(() => {
         if (user.isAuth) {
             getChats().then(r => {
-                chat.setChatList(r)
-                // setChatList(r)
-            }).catch(e => console.log(e))
+                chat.setChatList(r);
+            }).catch(e => console.log(e));
         }
-    }, [user.isAuth, chat])
+    }, [user.isAuth, chat]);
 
     return (
         <div className="d-flex flex-column rounded-4 me-4 w-25"

@@ -22,14 +22,12 @@ const AuthModal = observer(() => {
                     const userId = await login(email, password)
                     user.setUser({id: userId});
                     user.setIsAuth(true);
-                    user.setShowAuth(false);
                 }
             } else {
                 if(email && password && name) {
                     const userId = await registration(email, password, name);
                     user.setUser({id: userId});
                     user.setIsAuth(true);
-                    user.setShowAuth(false);
                 }
             }
         } catch (e) {
@@ -44,12 +42,10 @@ const AuthModal = observer(() => {
                 const userId = await login(data.email, data.sub)
                 user.setUser({id: userId});
                 user.setIsAuth(true);
-                user.setShowAuth(false);
             } else {
                 const userId = await registration(data.email, data.sub, data.name);
                 user.setUser({id: userId});
                 user.setIsAuth(true);
-                user.setShowAuth(false);
             }
         } catch (e) {
             alert(e.response.data.message);

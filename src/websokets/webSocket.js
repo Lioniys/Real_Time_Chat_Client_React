@@ -1,7 +1,7 @@
 
 
 export const newWebSocket = () => {
-    return new WebSocket(`ws://localhost:8080/ws/`)
+    return new WebSocket(`ws://localhost:8080/ws/`);
 }
 
 export const sendFirstMessage = (ws, channels) => {
@@ -10,7 +10,7 @@ export const sendFirstMessage = (ws, channels) => {
             ws.send(JSON.stringify({
                 event: "first",
                 channels: [...channels.map(i => i.id)]
-            }))
+            }));
         }}
 }
 
@@ -24,12 +24,12 @@ export const sendMessage = (ws, userId, value, channel) => {
                 text: value,
                 }
         })
-    )
+    );
 }
 
 export const listen = (ws, callBack) => {
     ws.onmessage = (event) => {
-        const msg = JSON.parse(JSON.parse(event.data))
-        callBack(msg)
+        const msg = JSON.parse(JSON.parse(event.data));
+        callBack(msg);
     }
 }

@@ -9,7 +9,9 @@ const ChatItem = observer(({item}) => {
     const {chat} = useContext(Context);
 
     const select = () => {
-        getChat(item.id).then(r => chat.setSelectChat(r)).catch(e => console.log(e))
+        getChat(item.id).then(r => {
+            chat.setSelectChat(r);
+        }).catch(e => console.log(e));
     }
 
     return (

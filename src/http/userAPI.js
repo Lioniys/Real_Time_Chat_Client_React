@@ -17,6 +17,6 @@ export const login = async (email, password) => {
 }
 
 export const check = async () => {
-    const response = await $authHost.get('api/v1/auth/verify')
-    return response.status === 200
+    const response = await $authHost.get('api/v1/auth/verify');
+    return response.status === 200;
 }
