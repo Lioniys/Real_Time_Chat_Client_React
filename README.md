@@ -22,4 +22,4 @@ docker-compose up -d --build
 
 </details>
 
-![Image alt](https://github.com/Lioniys/Real_Time_Chat_Client_React/raw/main/screenshots/Messanger.png)
+![Image alt](https://github.com/Lioniys/Real_Time_Chat_Client_React/raw/main/screenshots/Messenger.png)
