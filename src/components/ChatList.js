@@ -10,6 +10,7 @@ import {Context} from "../index";
 const ChatList = observer(() => {
     const [show, setShow] = useState(false);
     const [trigger, setTrigger] = useState(false);
+    const [chatListTrigger, setChatListTrigger] = useState(false);
     const [showAlert, setShowAlert] = useState(false);
     const [dataAlert, setDataAlert] = useState('чат создан');
     const [typeAlert, setTypeAlert] = useState('success');
@@ -22,7 +23,7 @@ const ChatList = observer(() => {
                 chat.setChatList(r);
             }).catch(e => console.log(e));
         }
-    }, [user.isAuth, chat]);
+    }, [user.isAuth, chat, chatListTrigger]);
 
     return (
         <div className="d-flex flex-column rounded-4 me-4 w-25"
@@ -53,6 +54,8 @@ const ChatList = observer(() => {
                 setShowAlert={setShowAlert}
                 setDataAlert={setDataAlert}
                 setTypeAlert={setTypeAlert}
+                chatListTrigger={chatListTrigger}
+                setChatListTrigger={setChatListTrigger}
             />
         </div>
     );

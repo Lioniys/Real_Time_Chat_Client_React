@@ -6,7 +6,7 @@ import {observer} from "mobx-react-lite";
 
 
 const CreateChatModal = observer((
-    {setShow, show, trigger, setShowAlert, setDataAlert, setTypeAlert}) => {
+    {setShow, show, trigger, setShowAlert, setDataAlert, setTypeAlert, chatListTrigger, setChatListTrigger}) => {
     const [text, setText] = useState('')
     const [dropdownName, setDropdownName] = useState('Выберите пользователя')
     const [userList, setUserList] = useState([])
@@ -29,7 +29,10 @@ const CreateChatModal = observer((
             createChat(text, selectUser).then(() => {
                 setShow(false)
                 setShowAlert(true)
-                setTimeout(() => setShowAlert(false), 1500)
+                setTimeout(() => {
+                    setShowAlert(false)
+                    setChatListTrigger(!chatListTrigger)
+                }, 1500)
             }).catch(e => {
                 setShow(false)
                 setTypeAlert('danger');

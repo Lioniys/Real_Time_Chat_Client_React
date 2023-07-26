@@ -13,6 +13,7 @@ export const login = async (email, password) => {
     params.append('password', password);
     const response = await $host.post('api/v1/auth/login', params);
     localStorage.setItem('access', response.data.access_token);
+
     return jwtDecode(response.data.access_token).sub;
 }
 
